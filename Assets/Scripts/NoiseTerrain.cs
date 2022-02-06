@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ZS.Tools;
 public class NoiseTerrain : MonoBehaviour
 {
 	private Terrain terrain;
 	private Transform transform;
+	private TerrainCollider terrainCollider;
 
-	private float heightScale = 0.05f;
+	public float heightScale = 0.05f;
+	public float perlinScale = 10f;
 
 	private float yPos;
 	// public GameObject terrainObject;
@@ -18,6 +20,7 @@ public class NoiseTerrain : MonoBehaviour
 	{
 		terrain = GetComponent<Terrain>();
 		transform = GetComponent<Transform>();
+		terrainCollider = GetComponent<TerrainCollider>();
 		// log the positions of the player and the terrain
 		// Debug.Log("Player position: " + player.transform.position);
 		// Debug.Log("Terrain position: " + terrain.transform.position);
@@ -29,7 +32,9 @@ public class NoiseTerrain : MonoBehaviour
 		// Debug.Log("Terrain height map resolution: " + terrain.terrainData.heightmapResolution);
 		yPos = -1 * (1 - heightScale) * terrain.terrainData.size.y * ((transform.position.z + terrain.terrainData.size.z) / terrain.terrainData.size.z);
 		terrain.terrainData = GenerateTerrain();
+		terrainCollider.terrainData = terrain.terrainData;
 		transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
+		Debug.Log("Started");
 	}
 
 	// Update is called once per frame
@@ -40,19 +45,23 @@ public class NoiseTerrain : MonoBehaviour
 
 	TerrainData GenerateTerrain()
 	{
-		TerrainData existingTerrain = terrain.terrainData;
+		// TerrainData existingTerrain = terrain.terrainData;
+		// TerrainData existingTerrain = new TerrainData();
+		// existingTerrain.size = new Vector3(terrain.terrainData.size.x, terrain.terrainData.size.y, terrain.terrainData.size.z);
+		// existingTerrain.heightmapResolution = terrain.terrainData.heightmapResolution;
+		TerrainData existingTerrain = TerrainDataCloner.Clone(terrain.terrainData);
 		existingTerrain.SetHeights(0, 0,
 			GenerateTerrainHeights(existingTerrain.heightmapResolution,
 				existingTerrain.heightmapResolution,
 				terrain.transform.position.x,
-				terrain.transform.position.z,
-			10f)
+				terrain.transform.position.z
+			)
 		);
 		// Debug.Log("TerrainHeight at 0: " + terrain.terrainData.GetHeight(0, 0));
 		return existingTerrain;
 	}
 
-	float[,] GenerateTerrainHeights(int width, int depth, float widthOffset, float depthOffset, float perlinScale)
+	float[,] GenerateTerrainHeights(int width, int depth, float widthOffset, float depthOffset)
 	{
 		float maxHeight = 0;
 		float minHeight = 1;
