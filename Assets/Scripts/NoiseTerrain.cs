@@ -11,6 +11,8 @@ public class NoiseTerrain : MonoBehaviour
 	public float heightScale = 0.05f;
 	public float perlinScale = 10f;
 
+	public GameObject obstaclePrefab;
+
 	private float yPos;
 	// public GameObject terrainObject;
 	// public GameObject player;
@@ -32,6 +34,7 @@ public class NoiseTerrain : MonoBehaviour
 		// Debug.Log("Terrain height map resolution: " + terrain.terrainData.heightmapResolution);
 		yPos = -1 * (1 - heightScale) * terrain.terrainData.size.y * ((transform.position.z + terrain.terrainData.size.z) / terrain.terrainData.size.z);
 		terrain.terrainData = GenerateTerrain();
+		makeObstacles(terrain.terrainData);
 		terrainCollider.terrainData = terrain.terrainData;
 		transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
 		Debug.Log("Started");
@@ -99,6 +102,51 @@ public class NoiseTerrain : MonoBehaviour
 		}
 		Debug.Log("MaxHeight: " + maxHeight + " MinHeight: " + minHeight);
 		return heights;
+	}
+
+	// void makeObstacles(TerrainData terrainData)
+	// {
+	// 	int width = terrainData.heightmapResolution;
+	// 	int depth = terrainData.heightmapResolution;
+	// 	float[,] heights = terrainData.GetHeights(0, 0, width, depth);
+	// 	for (int x = 0; x < width; x += 100)
+	// 	{
+	// 		for (int y = 0; y < depth; y += 100)
+	// 		{
+	// 			if (heights[y, x] > 0.5)
+	// 			{
+	// 				Instantiate(obstaclePrefab, new Vector3(terrain.transform.position.x + x, heights[y, x] * terrain.terrainData.size.y + yPos, transform.position.z + y), Quaternion.identity);
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	void makeObstacles(TerrainData terrainData)
+	{
+		for (float x = 0; x < terrainData.heightmapResolution; x++)
+		{
+			//heightmapHeight not heightmapWidth
+			for (float z = 0; z < terrainData.heightmapResolution; z++)
+			{
+				Terrain terrain = GetComponent<Terrain>();
+				int r = UnityEngine.Random.Range(0, 300);
+				if (r == 0)
+				{
+					TreeInstance treeTemp = new TreeInstance();
+
+					//position is local and expects value between 0 and 1
+					treeTemp.position = new Vector3(x / terrainData.heightmapResolution, 0, z / terrainData.heightmapResolution);
+
+					treeTemp.prototypeIndex = 0;
+					treeTemp.widthScale = 1f;
+					treeTemp.heightScale = 1f;
+					treeTemp.color = Color.white;
+					treeTemp.lightmapColor = Color.white;
+					terrain.AddTreeInstance(treeTemp);
+					terrain.Flush();
+				}
+			}
+		}
 	}
 
 }

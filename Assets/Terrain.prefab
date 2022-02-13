@@ -45,10 +45,10 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 5abe014801dd2d94a8ecc0fefe6b2a20, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 2000
   m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_TreeMaximumFullLODCount: 1191
+  m_DetailObjectDistance: 177
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heightScale: 0.04
   perlinScale: 8
+  obstaclePrefab: {fileID: 7861898539128538833, guid: e0c21d1fca24c6f43bd2666066dd580a, type: 3}
 --- !u!64 &2156086159140248683
 MeshCollider:
   m_ObjectHideFlags: 0
