@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f672ef7c5fbc81b43a6ba8b6bef76421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightScale: 0.04
+  heightScale: 0.02
   perlinScale: 8
   obstaclePrefab: {fileID: 7861898539128538833, guid: e0c21d1fca24c6f43bd2666066dd580a, type: 3}
 --- !u!64 &2156086159140248683
