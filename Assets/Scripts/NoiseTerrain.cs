@@ -129,7 +129,7 @@ public class NoiseTerrain : MonoBehaviour
 			for (float z = 0; z < terrainData.heightmapResolution; z++)
 			{
 				Terrain terrain = GetComponent<Terrain>();
-				int r = UnityEngine.Random.Range(0, 65);
+				int r = UnityEngine.Random.Range(0, 35);
 				if (r == 0)
 				{
 					TreeInstance treeTemp = new TreeInstance();
