@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heightScale: 0.02
   perlinScale: 8
+  treeSparsity: 70
   obstaclePrefab: {fileID: 7861898539128538833, guid: e0c21d1fca24c6f43bd2666066dd580a, type: 3}
 --- !u!64 &2156086159140248683
 MeshCollider:
