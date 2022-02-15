@@ -20,11 +20,17 @@ public class HorizontalVelocityControl : MonoBehaviour
 		// rb.AddForce(steering * 10f, 0, 0, ForceMode.Force);
 		if (Input.GetKey("right"))
 		{
-			rb.AddForce(50f, 0, 0, ForceMode.Force);
+			if (rb.velocity.x < 85f)
+			{
+				rb.AddForce(50f, 0, 0, ForceMode.Force);
+			}
 		}
 		if (Input.GetKey("left"))
 		{
-			rb.AddForce(-50f, 0, 0, ForceMode.Force);
+			if (rb.velocity.x > -85f)
+			{
+				rb.AddForce(-50f, 0, 0, ForceMode.Force);
+			}
 		}
 	}
 }

@@ -15,42 +15,83 @@ public class TileManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-
+		StartCoroutine(tilesLoop());
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		int playerX = Mathf.FloorToInt(player.transform.position.x / tileSize);
-		int playerZ = Mathf.FloorToInt(player.transform.position.z / tileSize);
-		HashSet<Vector2> tilesNeeded = new HashSet<Vector2>();
-		for (int x = playerX - 1; x <= playerX + 1; x++)
+		// int playerX = Mathf.FloorToInt(player.transform.position.x / tileSize);
+		// int playerZ = Mathf.FloorToInt(player.transform.position.z / tileSize);
+		// HashSet<Vector2> tilesNeeded = new HashSet<Vector2>();
+		// for (int x = playerX - 1; x <= playerX + 1; x++)
+		// {
+		// 	for (int z = playerZ - 1; z <= playerZ + 1; z++)
+		// 	{
+		// 		tilesNeeded.Add(new Vector2(x, z));
+		// 	}
+		// }
+		// foreach (Vector2 tile in tilesNeeded)
+		// {
+		// 	if (!tileDictionary.ContainsKey(tile))
+		// 	{
+		// 		GameObject newTile = Instantiate(tilePrefab, new Vector3(tile.x * tileSize, 0, tile.y * tileSize), Quaternion.identity);
+		// 		tileDictionary.Add(tile, newTile);
+		// 	}
+		// }
+		// HashSet<Vector3> tilesToRemove = new HashSet<Vector3>();
+		// foreach (Vector2 tile in tileDictionary.Keys)
+		// {
+		// 	if (!tilesNeeded.Contains(tile))
+		// 	{
+		// 		Destroy(tileDictionary[tile]);
+		// 		tilesToRemove.Add(tile);
+		// 	}
+		// }
+		// foreach (Vector3 tile in tilesToRemove)
+		// {
+		// 	tileDictionary.Remove(tile);
+		// }
+	}
+
+	IEnumerator tilesLoop()
+	{
+		while (true)
 		{
-			for (int z = playerZ - 1; z <= playerZ + 1; z++)
+			int playerX = Mathf.FloorToInt(player.transform.position.x / tileSize);
+			int playerZ = Mathf.FloorToInt(player.transform.position.z / tileSize);
+			HashSet<Vector2> tilesNeeded = new HashSet<Vector2>();
+			for (int x = playerX - 1; x <= playerX + 1; x++)
 			{
-				tilesNeeded.Add(new Vector2(x, z));
+				for (int z = playerZ - 1; z <= playerZ + 1; z++)
+				{
+					tilesNeeded.Add(new Vector2(x, z));
+				}
 			}
-		}
-		foreach (Vector2 tile in tilesNeeded)
-		{
-			if (!tileDictionary.ContainsKey(tile))
+			foreach (Vector2 tile in tilesNeeded)
 			{
-				GameObject newTile = Instantiate(tilePrefab, new Vector3(tile.x * tileSize, 0, tile.y * tileSize), Quaternion.identity);
-				tileDictionary.Add(tile, newTile);
+				if (!tileDictionary.ContainsKey(tile))
+				{
+					GameObject newTile = Instantiate(tilePrefab, new Vector3(tile.x * tileSize, 0, tile.y * tileSize), Quaternion.identity);
+					tileDictionary.Add(tile, newTile);
+					yield return null;
+				}
 			}
-		}
-		HashSet<Vector3> tilesToRemove = new HashSet<Vector3>();
-		foreach (Vector2 tile in tileDictionary.Keys)
-		{
-			if (!tilesNeeded.Contains(tile))
+			HashSet<Vector3> tilesToRemove = new HashSet<Vector3>();
+			foreach (Vector2 tile in tileDictionary.Keys)
 			{
-				Destroy(tileDictionary[tile]);
-				tilesToRemove.Add(tile);
+				if (!tilesNeeded.Contains(tile))
+				{
+					Destroy(tileDictionary[tile]);
+					tilesToRemove.Add(tile);
+					yield return null;
+				}
 			}
-		}
-		foreach (Vector3 tile in tilesToRemove)
-		{
-			tileDictionary.Remove(tile);
+			foreach (Vector3 tile in tilesToRemove)
+			{
+				tileDictionary.Remove(tile);
+			}
+			yield return null;
 		}
 	}
 
