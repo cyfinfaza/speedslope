@@ -13,7 +13,7 @@ public class HorizontalVelocityControl : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
 		// float steering = ((float)Input.mousePosition.x / Screen.width - 0.5f) / 0.5f;
 		// Debug.Log("steering: " + steering);
