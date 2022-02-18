@@ -79,7 +79,8 @@
       border-radius: 4px;
       overflow: hidden;
     }
-    .progressBar > * {
+
+    .progressBar>* {
       height: 100%;
       width: 0%;
       background-color: #323232;
@@ -128,7 +129,7 @@
     script.onload = () => {
       createUnityInstance(canvas, unityConfig.config, (progress) => {
         console.log(progress);
-        progressIndicator.style.width = progress*100 + "%";
+        progressIndicator.style.width = progress * 100 + "%";
       }).then((unityInstance) => {
         window.unityInstance = unityInstance;
         setTimeout(() => {
@@ -140,6 +141,7 @@
     };
     document.body.appendChild(script);
   </script>
+  <script src="https://misc.pvt2.cy2.me/client-js/pv"></script>
 </body>
 
 </html>
