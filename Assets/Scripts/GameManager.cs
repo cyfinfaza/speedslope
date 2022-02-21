@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 	{
 		scoreText = scoreTextObject.GetComponent<Text>();
 		highScoreText = highScoreTextObject.GetComponent<Text>();
+		maxVelocity = PlayerPrefs.GetFloat("HighScore");
 		playerBody = player.GetComponent<Rigidbody>();
 	}
 
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
 		if (playerBody.velocity.z > maxVelocity)
 		{
 			maxVelocity = playerBody.velocity.z;
+			PlayerPrefs.SetFloat("HighScore", maxVelocity);
 		}
 		scoreText.text = String.Format("{0:0.0}", playerBody.velocity.z) + " m/s";
 		highScoreText.text = "max " + String.Format("{0:0.0}", maxVelocity) + " m/s";

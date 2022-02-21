@@ -669,7 +669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 6474966737230104721, guid: 9481407d694df864f841b65d2115091d, type: 3}
   player: {fileID: 1588277017}
-  tileSize: 100
+  tileSize: 200
 --- !u!4 &1333713455
 Transform:
   m_ObjectHideFlags: 0
